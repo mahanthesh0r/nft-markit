@@ -35,7 +35,7 @@ const style = {
 
 const Collection = () => {
     const router = useRouter()
-    const { provider } = useWeb3
+    const { provider } = useWeb3()
     const { collectionId } = router.query
     const [collection, setCollection] = useState({})
     const [nfts, setNfts] = useState([])
@@ -57,10 +57,12 @@ const Collection = () => {
       if(!nftModule) return
       ;(async () => {
         const nfts = await nftModule.getAll()
+        console.log("NFT", nfts)
 
         setNfts(nfts)
       })()
     }, [nftModule])
+    
 
     const marketPlaceModule = useMemo(() => {
       if (!provider) return
@@ -70,7 +72,7 @@ const Collection = () => {
         'https://eth-rinkeby.alchemyapi.io/v2/WO1OtLa49GidlvC-XPSyoIu9GWSi5GPA'
       )
       return sdk.getMarketplaceModule(
-        '0x11Ea548713E5601E42E5d7706955Fd2f516dba25'
+        '0xb8dB5dFA3bC249F8816C2eFE5B546db4b6ae5bC8'
       )
     }, [provider])
 
@@ -107,8 +109,8 @@ const Collection = () => {
     fetchCollectionData()
   }, [collectionId])
 
-    console.log(router.query)
-    console.log(router.query.collectionId)
+     console.log("collection ID", router.query)
+    // console.log(router.query.collectionId)
   return (
     <div className="overflow-hidden">
       <Header />
